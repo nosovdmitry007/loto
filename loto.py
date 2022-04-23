@@ -3,7 +3,7 @@ from random import randint
 
 def generate_unique_numbers(count, minbound, maxbound):
     if count > maxbound - minbound + 1:
-        raise ValueError('Incorrect input parameters')
+        raise ValueError('Неправильные входные параметры')
     ret = []
     while len(ret) < count:
         new = randint(minbound, maxbound)
@@ -18,7 +18,6 @@ class Keg:
     def __init__(self):
         self.__num = randint(1, 90)
 
-    @property
     def num(self):
         return self.__num
 
@@ -75,7 +74,7 @@ class Card:
             if item == num:
                 self.__data[index] = self.__crossednum
                 return
-        raise ValueError(f'Number not in card: {num}')
+        raise ValueError(f'Номер, которого нет в карточке: {num}')
 
     def closed(self) -> bool:
         return set(self.__data) == {self.__emptynum, self.__crossednum}
@@ -128,8 +127,9 @@ if __name__ == '__main__':
     while True:
         score = game.play_round()
         if score == 1:
-            print('You win')
+            print('Ты победил')
             break
         elif score == 2:
-            print('You lose')
+            print('Ты проиграл')
+
             break
