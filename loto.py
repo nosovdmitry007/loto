@@ -1,6 +1,5 @@
 from random import randint
 
-
 def generate_unique_numbers(count, minbound, maxbound):
     if count > maxbound - minbound + 1:
         raise ValueError('Неправильные входные параметры')
@@ -10,7 +9,6 @@ def generate_unique_numbers(count, minbound, maxbound):
         if new not in ret:
             ret.append(new)
     return ret
-
 
 class Keg:
     __num = None
@@ -24,8 +22,8 @@ class Keg:
     def __str__(self):
         return str(self.__num)
 
-
 class Card:
+
     __rows = 3
     __cols = 9
     __nums_in_row = 5
@@ -36,7 +34,6 @@ class Card:
     def __init__(self):
         uniques_count = self.__nums_in_row * self.__rows
         uniques = generate_unique_numbers(uniques_count, 1, 90)
-
         self.__data = []
         for i in range(0, self.__rows):
             tmp = sorted(uniques[self.__nums_in_row * i: self.__nums_in_row * (i + 1)])
@@ -58,12 +55,10 @@ class Card:
                 ret += f' {str(num)}'
             else:
                 ret += str(num)
-
             if (index + 1) % self.__cols == 0:
                 ret += '\n'
             else:
                 ret += ' '
-
         return ret + delimiter
 
     def __contains__(self, item):
@@ -79,7 +74,6 @@ class Card:
     def closed(self) -> bool:
         return set(self.__data) == {self.__emptynum, self.__crossednum}
 
-
 class Game:
     __usercard = None
     __compcard = None
@@ -93,23 +87,14 @@ class Game:
         self.__kegs = generate_unique_numbers(self.__numkegs, 1, 90)
 
     def play_round(self) -> int:
-        """
-        :return:
-        0 - game must go on
-        1 - user wins
-        2 - computer wins
-        """
-
         keg = self.__kegs.pop()
         print(f'Новый бочонок: {keg} (осталось {len(self.__kegs)})')
         print(f'----- Ваша карточка ------\n{self.__usercard}')
         print(f'-- Карточка компьютера ---\n{self.__compcard}')
-
         useranswer = input('Зачеркнуть цифру? (y/n)').lower().strip()
         if useranswer == 'y' and not keg in self.__usercard or \
            useranswer != 'y' and keg in self.__usercard:
             return 2
-
         if keg in self.__usercard:
             self.__usercard.cross_num(keg)
             if self.__usercard.closed():
@@ -118,9 +103,7 @@ class Game:
             self.__compcard.cross_num(keg)
             if self.__compcard.closed():
                 return 2
-
         return 0
-
 
 if __name__ == '__main__':
     game = Game()
@@ -131,5 +114,4 @@ if __name__ == '__main__':
             break
         elif score == 2:
             print('Ты проиграл')
-
             break
